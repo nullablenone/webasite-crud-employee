@@ -1,17 +1,21 @@
 package main
 
 import (
-	"crud-employee/database"
+	"crud-employee/config"
+	"crud-employee/models"
 	"crud-employee/routes"
 	"net/http"
 )
 
 func main() {
 	// database
-	database.InitDataBase()
+	db := config.InitDataBase()
+	err := models.MigrateEmployee(db)
+	if err != nil {
+		panic(err)
+	}
 
 	// route
-	server := http.NewServeMux()
-	routes.MapRoutes(server)
-	http.ListenAndServe(":9090", server)
+	router := routes.SetupRoutes(db)
+	http.ListenAndServe(":9090", router)
 }

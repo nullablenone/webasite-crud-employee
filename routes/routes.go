@@ -2,9 +2,16 @@ package routes
 
 import (
 	"crud-employee/controllers"
-	"net/http"
+
+	"github.com/gorilla/mux"
+	"gorm.io/gorm"
 )
 
-func MapRoutes(server *http.ServeMux) {
-	server.HandleFunc("/test", controllers.Test)
+func SetupRoutes(db *gorm.DB) *mux.Router {
+	router := mux.NewRouter()
+	router.HandleFunc("/employee", controllers.IndexEmployee(db)).Methods("GET")
+	router.HandleFunc("/employee/create", controllers.CreateEmployee()).Methods("GET")
+	router.HandleFunc("/employee/create", controllers.StoreEmployee(db)).Methods("POST")
+
+	return router
 }

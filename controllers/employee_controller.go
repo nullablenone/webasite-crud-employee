@@ -211,20 +211,31 @@ func UpdateEmployee(db *gorm.DB) http.HandlerFunc {
 		}
 
 		var employee models.Employee
-		// db.First(&employee, id)
-		// db.Model(&employee).Updates(employeeUpdate)
-
-		// if result := db.Create(&employee); result.Error != nil {
-		// 	w.Write([]byte("gagal menyimpan data"))
-		// 	return
-		// }
-
-		if result := db.First(&employee, id); result.Error != nil{
-			 	w.Write([]byte("gagal mengambil data"))
+		if result := db.First(&employee, id); result.Error != nil {
+			w.Write([]byte("gagal mengambil data"))
 		}
 
-		if result := db.Model(&employee).Updates(employeeUpdate); result.Error != nil{
+		if result := db.Model(&employee).Updates(employeeUpdate); result.Error != nil {
 			w.Write([]byte("gagal memperbarui data"))
+		}
+
+		http.Redirect(w, r, "/employee", http.StatusSeeOther)
+	}
+}
+
+func DestroyEmployee(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		//mengambil id
+		vars := mux.Vars(r)
+		id := vars["id"]
+
+		var employee models.Employee
+		if result := db.First(&employee, id); result.Error != nil {
+			w.Write([]byte("gagal mengambil data"))
+		}
+
+		if result := db.Delete(&employee); result.Error != nil {
+			w.Write([]byte("gagal hapus data data"))
 		}
 
 		http.Redirect(w, r, "/employee", http.StatusSeeOther)

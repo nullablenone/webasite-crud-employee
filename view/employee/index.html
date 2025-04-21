@@ -57,12 +57,12 @@
     <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         <!-- Employee Card -->
-         {{range .Employee}}
+        {{range .Employee}}
         <div
           class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
           <div class="p-5">
-            <!-- <div class="flex items-center space-x-4 mb-4">
-              <img src="/static/contoh.png" alt="Employee" class="w-16 h-16 rounded-full object-cover">
+            <div class="flex items-center space-x-4 mb-4">
+              <!-- <img src="/static/contoh.png" alt="Employee" class="w-16 h-16 rounded-full object-cover"> -->
               <div>
                 <h3 class="text-lg font-semibold text-gray-800"></h3>
                 <span
@@ -70,7 +70,7 @@
                   {{.Position}}
                 </span>
               </div>
-            </div> -->
+            </div>
             <div class="space-y-2 text-sm text-gray-600">
               <div class="flex items-center">
                 <i class="fas fa-user w-5 text-gray-400"></i>
@@ -86,9 +86,9 @@
               </div>
             </div>
             <div class="flex justify-end space-x-2 mt-4">
-              <button class="text-blue-600 hover:text-blue-800">
+              <a href="/employee/edit/{{.ID}}" class="text-blue-600 hover:text-blue-800">
                 <i class="fas fa-pen"></i>
-              </button>
+              </a>
               <button class="text-red-600 hover:text-red-800">
                 <i class="fas fa-trash"></i>
               </button>
